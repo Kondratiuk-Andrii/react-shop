@@ -1,13 +1,146 @@
+/* Обнуление отступов и выбор шрифта для основного содержимого */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0; /* Убирает отступы по умолчанию */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+        "Droid Sans", "Helvetica Neue", sans-serif; /* Выбор шрифтов для текста */
+    -webkit-font-smoothing: antialiased; /* Сглаживание шрифта для Safari */
+    -moz-osx-font-smoothing: grayscale; /* Сглаживание шрифта для Firefox на macOS */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Отступы по краям навигационного блока */
+nav {
+    padding: 0 1rem; /* Отступы 0 сверху/снизу и 1rem слева/справа */
+}
+
+/* Высота минимальной области контента, отступы сверху и снизу */
+.content {
+    min-height: calc(
+        100vh - 70px - 64px
+    ); /* Минимальная высота контента, высчитанная от высоты видимого экрана минус отступы */
+    padding: 1.5rem 0; /* Отступы 1.5rem сверху/снизу и 0 слева/справа */
+}
+
+/* Сетка товаров */
+.goods {
+    display: grid; /* Элементы сетки */
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(250px, 1fr)
+    ); /* Повторение столбцов, меняющих размеры от 250px до 1fr (равномерно заполняют доступное пространство) */
+    gap: 1rem; /* Расстояние между элементами */
+}
+
+/* Карточка товара как контейнер с вертикальным расположением */
+.card {
+    display: flex; /* Элементы внутри блока располагаются в строку */
+    flex-direction: column; /* Элементы располагаются вертикально */
+}
+/* Контент карточки расширяется, занимая доступное пространство */
+.card-content {
+    flex-grow: 1; /* Элемент расширяется, чтобы занять доступное пространство */
+}
+
+/* Корзина */
+.cart {
+    position: fixed; /* Позиционирование относительно окна просмотра */
+    bottom: 2rem; /* Отступ от нижнего края на 2rem */
+    right: 2rem; /* Отступ справа на 2rem */
+
+    cursor: pointer; /* Изменение курсора при наведении */
+    z-index: 5; /* Слой элемента */
+    padding: 1rem; /* Внутренние отступы */
+}
+/* При ширине экрана более 767px, корзина будет расположена сверху */
+@media (min-width: 767px) {
+    .cart {
+        top: 5rem; /* Отступ сверху на 5rem */
+        bottom: unset; /* Сброс отступа снизу */
+    }
+}
+
+/* Список товаров в корзине */
+.basket-list {
+    position: fixed; /* Позиционирование относительно окна просмотра */
+    top: 50%; /* Расположение сверху на 50% */
+    left: 50%; /* Расположение слева на 50% */
+    transform: translate(-50%, -50%); /* Центрирование по центру экрана */
+
+    background-color: #fff; /* Цвет фона */
+    width: 50rem; /* Ширина блока */
+    max-width: 95%; /* Максимальная ширина блока */
+
+    box-shadow: inset -1px 3px 8px 5px #1f87ff, 2px 5px 16px 0px #0b325e, 5px 5px 15px 5px rgba(0, 0, 0, 0); /* Тень блока */
+
+    animation: show 500ms ease-in-out; /* Анимация появления блока */
+
+    font-weight: bold; /* Жирный шрифт, чтобы выделить цену */
+    font-size: 1rem;
+}
+
+.total-price {
+    margin-top: auto; /* Отступ сверху - автоматический отступ, чтобы элемент прижался к низу контейнера */
+    font-size: 1.5rem;
+}
+
+/* Кнопка закрытия корзины */
+.basket-close {
+    cursor: pointer; /* Изменение курсора при наведении */
+    position: absolute; /* Абсолютное позиционирование */
+    top: 0.5rem; /* Отступ сверху на 0.5rem */
+    right: 0.5rem; /* Отступ справа на 0.5rem */
+    color: #fff; /* Цвет текста */
+}
+
+/* Кнопка удаления товара из корзины */
+.basket-delete {
+    cursor: pointer; /* Изменение курсора при наведении */
+}
+
+/* Анимация показа списка товаров в корзине */
+@keyframes show {
+    from {
+        top: 70%; /* Начальная позиция анимации сверху */
+        opacity: 0; /* Начальная непрозрачность */
+    }
+    to {
+        top: 50%; /* Конечная позиция анимации сверху */
+        opacity: 1; /* Конечная непрозрачность */
+    }
+}
+
+/* Количество товаров в корзине с цветом и курсором */
+.basket-quantity {
+    cursor: pointer; /* Изменение курсора при наведении */
+    vertical-align: middle; /* Вертикальное выравнивание */
+    color: #26a69a; /* Цвет текста */
+
+}
+
+.checkout-btn {
+    width: 8rem;
+    position: absolute; /* Абсолютное позиционирование */
+    right: 0.5rem; /* Отступ справа на 0.5rem */
+}
+ul > .collection-item.active:last-child {
+    min-height: 4rem !important;
+}
+
+/* Контейнер для всплывающих сообщений */
+#toast-container {
+    top: 3rem !important; /* Отступ сверху на 3rem с приоритетом !important */
+    animation: fade-in 250ms ease-in-out; /* Анимация появления */
+}
+
+/* Определение ключевых кадров для анимации fade-in */
+@keyframes fade-in {
+    /* Стиль начального состояния анимации */
+    from {
+        opacity: 0; /* Начальная непрозрачность элемента (полностью прозрачный) */
+        transform: translateY(2rem); /* Начальное положение: сдвиг на 2rem вниз по вертикали */
+    }
+    /* Стиль конечного состояния анимации */
+    to {
+        opacity: 1; /* Конечная непрозрачность элемента (полностью непрозрачный) */
+        transform: translateY(0rem); /* Конечное положение: без сдвига по вертикали */
+    }
 }
